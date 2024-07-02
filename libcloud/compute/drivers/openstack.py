@@ -4325,8 +4325,9 @@ class OpenStack_2_NodeDriver(OpenStack_1_1_NodeDriver):
             return False
         if not port_id:
             ports = self.ex_get_node_ports(node)
-            port_id = ports[0].id
-        if ports:
+            if ports:
+                port_id = ports[0].id
+        if port_id:
             # Set to the first node port
             resp = self.network_connection.request(
                 "/v2.0/floatingips/%s" % ip_id,
