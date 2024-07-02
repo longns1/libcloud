@@ -28,7 +28,7 @@ Common
 Compute
 ~~~~~~~
 
-- [OpenStack] Optional node port ID to attach the floating IP in OpenStack
+- [OpenStack] Add optional node port ID to attach the floating IP in OpenStack
   ex_attach_floating_ip_to_node function.
   (#2028)
   [Miguel Caballer - @micafer]
