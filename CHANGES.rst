@@ -42,6 +42,16 @@ Common
   (#1940)
   [@munahaf on behalf of OpenRefactory and Open Source Security Foundation]
 
+- Update versions of build and packaging tools required to build the package.
+
+  Per report from Rui Chen (@chenrui333) ansible homebrew package which
+  depends on libcloud was failing to build with Libcloud 3.8.0.
+
+  Special thanks to Rui Chen for their assistance with troubleshooting the issue
+  and testing v3.9.0 release candidate.
+  (#2047)
+  [Tomaz Muraus - @Kami, Rui Chen - @chenrui333]
+
 Compute
 ~~~~~~~
 
