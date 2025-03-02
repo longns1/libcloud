@@ -7,6 +7,14 @@ Changes in Apache Libcloud 3.9.0
 Common
 ~~~~~~
 
+- Unused ``setup.py`` file has been removed. The project has switched
+  to ``pyproject.toml`` a while ago and unused file has been removed to
+  reduce potential confusion. Corresponding ``MANIFEST.in`` has also been
+  removed in favor of explicit include and exclude directives in
+  ``pyproject.toml``.
+  (#2024)
+  [Tomaz Muraus - @Kami]
+
 - Indicate we also support Python 3.12 (non beta) and Python 3.13.
   (#2050)
   [Tomaz Muraus - @Kami]
