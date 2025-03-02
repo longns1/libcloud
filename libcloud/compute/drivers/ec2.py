@@ -1651,7 +1651,7 @@ class BaseEC2NodeDriver(NodeDriver):
 
         if ex_security_group_ids and not ex_subnet:
             raise ValueError(
-                "You can only supply ex_security_group_ids" " combinated with ex_subnet"
+                "You can only supply ex_security_group_ids" " combined with ex_subnet"
             )
 
         security_group_ids = ex_security_group_ids
