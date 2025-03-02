@@ -7,6 +7,17 @@ Changes in Apache Libcloud 3.9.0
 Common
 ~~~~~~
 
+- Indicate we also support Python 3.12 (non beta) and Python 3.13.
+  (#2050)
+  [Tomaz Muraus - @Kami]
+
+- Support for Python 3.8 which is EOL has been removed.
+
+  If you still want to use Libcloud with Python 3.8, you should use an older
+  release which still supports Python 3.8.
+  (#2050)
+  [Tomaz Muraus - @Kami]
+
 - Support for Python 3.7 which is EOL has been removed.
 
   If you still want to use Libcloud with Python 3.7, you should use an older
@@ -97,6 +108,10 @@ Compute
   (#1983)
   [@cdfmlr]
 
+- [Amazon S3] Add support for ``me-central-1`` region.
+  (#2030)
+  [@seifertdan]
+
 Storage
 ~~~~~~~
 
@@ -123,6 +138,11 @@ Other / Development
   tests in parallel and order in which they run is not fully deterministic).
   (#1994)
   [Tomaz Muraus - @Kami]
+
+- Add a workaround so tests work with pytest >= 8.2. Also use latest version of
+  pytest for running tests.
+  (#2033)
+  [Steve Kowalik - @s-t-e-v-e-n-k]
 
 Changes in Apache Libcloud 3.8.0
 --------------------------------
