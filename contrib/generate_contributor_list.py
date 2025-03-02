@@ -87,7 +87,9 @@ def parse_changes_file(file_path, versions=None):
                     active_tickets = active_tickets.split(", ")
                     active_tickets = [
                         ticket
+
                         for ticket in active_tickets
+
                         if ticket.startswith("LIBCLOUD-") or ticket.startswith("GITHUB-")
                     ]
 
@@ -111,12 +113,14 @@ def convert_to_markdown(contributors_map, include_tickets=False):
     def compare(item1, item2):
         lastname1 = item1.split(" ")[-1].lower()
         lastname2 = item2.split(" ")[-1].lower()
+
         return (lastname1 > lastname2) - (lastname1 < lastname2)
 
     names = contributors_map.keys()
     names = sorted(names, cmp=compare)
 
     result = []
+
     for name in names:
         tickets = contributors_map[name]
 
@@ -125,6 +129,7 @@ def convert_to_markdown(contributors_map, include_tickets=False):
         for ticket in tickets:
             if "-" not in ticket:
                 # Invalid ticket number
+
                 continue
 
             number = ticket.split("-")[1]
@@ -133,6 +138,8 @@ def convert_to_markdown(contributors_map, include_tickets=False):
                 url = JIRA_URL % (number)
             elif ticket.startswith("GITHUB-") or ticket.startswith("GH-"):
                 url = GITHUB_URL % (number)
+            else:
+                url = None
 
             values = {"ticket": ticket, "url": url}
             tickets_string.append("[%(ticket)s](%(url)s)" % values)
@@ -147,6 +154,7 @@ def convert_to_markdown(contributors_map, include_tickets=False):
         result.append(line.strip())
 
     result = "\n".join(result)
+
     return result
 
 
