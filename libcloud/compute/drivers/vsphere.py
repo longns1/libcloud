@@ -168,6 +168,7 @@ class VSphereNodeDriver(NodeDriver):
 
         potential_locations = [
             dc
+
             for dc in content.viewManager.CreateContainerView(
                 content.rootFolder,
                 [vim.ClusterComputeResource, vim.HostSystem],
@@ -202,6 +203,7 @@ class VSphereNodeDriver(NodeDriver):
         return locations
 
     def _to_location(self, data):
+        extra = {}
         try:
             if isinstance(data, vim.HostSystem):
                 extra = {
@@ -753,6 +755,7 @@ class VSphereNodeDriver(NodeDriver):
                     "created": s.createTime.strftime("%Y-%m-%d %H:%M"),
                     "state": s.state,
                 }
+
                 for s in virtual_machine.snapshot.rootSnapshotList
             ]
             extra["snapshots"] = snapshots
@@ -1418,6 +1421,7 @@ class VSphere_REST_NodeDriver(NodeDriver):
         loop = asyncio.get_event_loop()
         vms = [
             loop.run_in_executor(None, self._to_node, vm_ids[i], interfaces)
+
             for i in range(len(vm_ids))
         ]
 
@@ -1438,12 +1442,14 @@ class VSphere_REST_NodeDriver(NodeDriver):
                 None,
                 functools.partial(self.ex_list_hosts, ex_filter_datacenters=datacenter["id"]),
             )
+
             for datacenter in datacenters
         ]
         hosts = await asyncio.gather(*hosts_futures)
 
         vm_resp_futures = [
             loop.run_in_executor(None, functools.partial(self._get_vms_with_host, host))
+
             for host in itertools.chain(*hosts)
         ]
 
@@ -1592,6 +1598,7 @@ class VSphere_REST_NodeDriver(NodeDriver):
                 "status": interface["status"],
                 "ip": interface["ipv4"]["address"],
             }
+
             for interface in response
         ]
 
@@ -1879,6 +1886,8 @@ class VSphere_REST_NodeDriver(NodeDriver):
         return result["value"]
 
     def _get_resource_pool(self, host_id=None, cluster_id=None, name=None):
+        pms = None
+
         if host_id:
             pms = {"filter.hosts": host_id}
 
@@ -1887,6 +1896,10 @@ class VSphere_REST_NodeDriver(NodeDriver):
 
         if name:
             pms = {"filter.names": name}
+
+        if not pms:
+            raise ValueError("Either host_id, cluster_id or name must be provided")
+
         rp_request = "/rest/vcenter/resource-pool"
         resource_pool = self._request(rp_request, params=pms).object
 
@@ -1982,6 +1995,9 @@ class VSphere_REST_NodeDriver(NodeDriver):
         will attempt to put the VM in a random folder and a warning about it
         will be issued in case the value remains `None`.
         """
+        create_request = None
+        data = {}
+
         # image is in the host then need the 6.5 driver
 
         if image.extra["type"] == "template_6_5":
@@ -2218,6 +2234,10 @@ class VSphere_REST_NodeDriver(NodeDriver):
                 image.id
             )
             data = json.dumps({"spec": spec})
+
+        if not create_request:
+            raise ValueError("Missing create_request")
+
         # deploy the node
         result = self._request(create_request, method="POST", data=data)
         # wait until the node is up and then add extra config

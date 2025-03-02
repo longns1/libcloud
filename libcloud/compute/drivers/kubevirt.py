@@ -136,11 +136,16 @@ class KubeVirtNodeDriver(KubernetesDriverMixin, NodeDriver):
             raise ValueError("This method needs id or name to be specified")
         nodes = self.list_nodes()
 
+        node_gen = None
+
         if id:
             node_gen = filter(lambda x: x.id == id, nodes)
 
         if name:
             node_gen = filter(lambda x: x.name == name, nodes)
+
+        if not node_gen:
+            raise ValueError("node_gen is not defined")
 
         try:
             return next(node_gen)

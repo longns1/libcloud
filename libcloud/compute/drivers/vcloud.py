@@ -572,7 +572,9 @@ class VCloudNodeDriver(NodeDriver):
             res = self.connection.request(self.org)
             self._vdcs = [
                 self._to_vdc(self.connection.request(get_url_path(i.get("href"))).object)
+
                 for i in res.object.findall(fixxpath(res.object, "Link"))
+
                 if i.get("type") == "application/vnd.vmware.vcloud.vdc+xml"
             ]
 
@@ -659,7 +661,9 @@ class VCloudNodeDriver(NodeDriver):
         res = self.connection.request(self.org)
         catalogs = [
             i.get("href")
+
             for i in res.object.findall(fixxpath(res.object, "Link"))
+
             if i.get("type") == "application/vnd.vmware.vcloud.catalog+xml"
         ]
 
@@ -752,7 +756,9 @@ class VCloudNodeDriver(NodeDriver):
             elms = res.object.findall(fixxpath(res.object, "ResourceEntities/ResourceEntity"))
             vapps = [
                 (i.get("name"), i.get("href"))
+
                 for i in elms
+
                 if i.get("type") == "application/vnd.vmware.vcloud.vApp+xml" and i.get("name")
             ]
 
@@ -804,7 +810,9 @@ class VCloudNodeDriver(NodeDriver):
         cat_items = res.findall(fixxpath(res, "CatalogItems/CatalogItem"))
         cat_item_hrefs = [
             i.get("href")
+
             for i in cat_items
+
             if i.get("type") == "application/vnd.vmware.vcloud.catalogItem+xml"
         ]
 
@@ -827,7 +835,9 @@ class VCloudNodeDriver(NodeDriver):
             res_ents = res.findall(fixxpath(res, "ResourceEntities/ResourceEntity"))
             images += [
                 self._to_image(i)
+
                 for i in res_ents
+
                 if i.get("type") == "application/vnd.vmware.vcloud.vAppTemplate+xml"
             ]
 
@@ -837,7 +847,9 @@ class VCloudNodeDriver(NodeDriver):
                 res_ents = res.findall(fixxpath(res, "Entity"))
                 images += [
                     self._to_image(i)
+
                     for i in res_ents
+
                     if i.get("type") == "application/vnd.vmware.vcloud.vAppTemplate+xml"
                 ]
 
@@ -1023,7 +1035,9 @@ class VCloud_1_5_Connection(VCloudConnection):
             org_list_url = get_url_path(
                 next(
                     link
+
                     for link in body.findall(fixxpath(body, "Link"))
+
                     if link.get("type") == "application/vnd.vmware.vcloud.orgList+xml"
                 ).get("href")
             )
@@ -1039,7 +1053,9 @@ class VCloud_1_5_Connection(VCloudConnection):
             self.driver.org = get_url_path(
                 next(
                     org
+
                     for org in body.findall(fixxpath(body, "Org"))
+
                     if org.get("name") == self.org_name
                 ).get("href")
             )
@@ -1463,21 +1479,21 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
         if control_access.subjects:
             access_settings_elem = ET.SubElement(xml, "AccessSettings")
 
-        for subject in control_access.subjects:
-            setting = ET.SubElement(access_settings_elem, "AccessSetting")
+            for subject in control_access.subjects:
+                setting = ET.SubElement(access_settings_elem, "AccessSetting")
 
-            if subject.id:
-                href = subject.id
-            else:
-                res = self.ex_query(type=subject.type, filter="name==" + subject.name)
+                if subject.id:
+                    href = subject.id
+                else:
+                    res = self.ex_query(type=subject.type, filter="name==" + subject.name)
 
-                if not res:
-                    raise LibcloudError(
-                        'Specified subject "{} {}" not found '.format(subject.type, subject.name)
-                    )
-                href = res[0]["href"]
-            ET.SubElement(setting, "Subject", {"href": href})
-            ET.SubElement(setting, "AccessLevel").text = subject.access_level
+                    if not res:
+                        raise LibcloudError(
+                            'Specified subject "{} {}" not found '.format(subject.type, subject.name)
+                        )
+                    href = res[0]["href"]
+                ET.SubElement(setting, "Subject", {"href": href})
+                ET.SubElement(setting, "AccessLevel").text = subject.access_level
 
         headers = {"Content-Type": "application/vnd.vmware.vcloud.controlAccess+xml"}
         self.connection.request(
@@ -2497,7 +2513,9 @@ class VCloud_1_5_NodeDriver(VCloudNodeDriver):
         # Find vDC
         vdc_id = next(
             link.get("href")
+
             for link in node_elm.findall(fixxpath(node_elm, "Link"))
+
             if link.get("type") == "application/vnd.vmware.vcloud.vdc+xml"
         )  # pylint: disable=no-member
         vdc = next(vdc for vdc in self.vdcs if vdc.id == vdc_id)
