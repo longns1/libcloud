@@ -135,6 +135,11 @@ Other / Development
   (#1994)
   [Tomaz Muraus - @Kami]
 
+- Add a workaround so tests work with pytest >= 8.2. Also use latest version of
+  pytest for running tests.
+  (#2033)
+  [Steve Kowalik - @s-t-e-v-e-n-k]
+
 Changes in Apache Libcloud 3.8.0
 --------------------------------
 
