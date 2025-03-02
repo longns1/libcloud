@@ -74,7 +74,7 @@ Changelog = "https://github.com/apache/libcloud/blob/trunk/CHANGES.rst"
 
 [project.optional-dependencies]
 build = [
-    "build==1.2.1"
+    "build==1.2.2"
 ]
 publish = [
     "twine==5.1.1"
@@ -128,7 +128,6 @@ version = {attr = "libcloud.__version__"}
 readme = {file = ["README.rst"], content-type = "text/x-rst"}
 
 [tool.distutils.bdist_wheel]
-universal = true
 
 
 [tool.black]

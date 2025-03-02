@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Project utilized pyproject.toml for setup and packaging metadata, this file is only left in place
+# Project utilizes pyproject.toml for setup and packaging metadata, this file is only left in place
 # so we can still utilize setup.py --version
 
 from setuptools import setup
