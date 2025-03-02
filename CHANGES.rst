@@ -9,9 +9,7 @@ Common
 
 - Unused ``setup.py`` file has been removed. The project has switched
   to ``pyproject.toml`` a while ago and unused file has been removed to
-  reduce potential confusion. Corresponding ``MANIFEST.in`` has also been
-  removed in favor of explicit include and exclude directives in
-  ``pyproject.toml``.
+  reduce potential confusion.
   (#2024)
   [Tomaz Muraus - @Kami]
 
