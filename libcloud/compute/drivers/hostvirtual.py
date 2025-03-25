@@ -43,7 +43,7 @@ except ImportError:
     import json
 
 
-API_ROOT = ""
+API_ROOT = "/api"
 
 NODE_STATE_MAP = {
     "BUILDING": NodeState.PENDING,
@@ -84,7 +84,7 @@ class HostVirtualNodeDriver(NodeDriver):
         except HostVirtualException:
             return []
         nodes = []
-        for value in result:
+        for value in result['data']:
             node = self._to_node(value)
             nodes.append(node)
         return nodes
